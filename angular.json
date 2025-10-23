@@ -1,6 +1,15 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
+  "schematics": {
+  "@schematics/angular:component": {
+    "inlineStyle": false,
+    "inlineTemplate": false,
+    "skipTests": false,
+    "style": "css",
+    "skipImport": false
+  }
+},
   "newProjectRoot": "projects",
   "projects": {
     "portfolio": {

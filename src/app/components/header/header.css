@@ -1,0 +1,15 @@
+@media (max-width: 991px) { /* Adjust depending on your breakpoint */
+  .navbar-collapse {
+    justify-content: center;
+  }
+  .navbar-nav {
+    text-align: center;
+  }
+  .navbar-nav {
+  margin: 0 auto; /* centers the ul inside the navbar */
+}
+
+.navbar-nav .nav-item {
+  text-align: center; /* ensures each link is centered inside li */
+}
+}

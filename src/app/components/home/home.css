@@ -1,0 +1,10 @@
+.main-box{
+    background-color: rgb(50, 48, 48); color: white;
+      display: flex;          /* puts children side by side */
+  align-items: center;    /* vertically center them */
+
+}
+
+.profile{
+    max-width: 40%;
+}
