@@ -8,3 +8,12 @@
 .profile{
     max-width: 40%;
 }
+
+
+  .social-icon i {
+    transition: transform 0.3s;
+  }
+
+  .social-icon:hover i {
+    transform: scale(1.3);
+  }
