@@ -1,0 +1,36 @@
+body {
+      background-color: #121212; /* Dark page background */
+      color: #fff; /* Default text color white */
+    }
+
+    .contact-card {
+
+      border: none; /* Remove borders */
+      border-radius: 0.5rem;
+      padding: 2rem;
+    }
+
+    .form-control {
+     
+     
+      color: #0a0a0a; /* White text */
+    }
+
+    .form-control:focus {
+      box-shadow: none; /* Remove focus shadow */
+      border: 1px solid #fff; /* Optional: subtle white border on focus */
+    }
+
+    .btn-primary {
+      background-color: #007bff;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #0056b3;
+    }
+
+    .alert {
+
+      border: none;
+    }
