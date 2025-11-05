@@ -1,46 +1,78 @@
-
+  
 <div class="container my-5">
   <div class="row justify-content-center">
-    <div class="col-md-12">
+    <div class="col-md-8 col-lg-7">
       <div class="contact-card shadow-sm">
-        <h3 class="mb-4">Contact Me</h3>
-        <form id="contactForm">
+        <h3 class="mb-4 text-center">Contact Me</h3>
+        
+        <!-- 
+          KEY FIX 1: 
+          - We use (ngSubmit)="onSubmit()" to call our TypeScript function.
+          - This automatically prevents the default page refresh.
+          - #contactForm="ngForm" creates a local reference to the form.
+        -->
+        <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
           <div class="mb-3">
             <label for="name" class="form-label">Name *</label>
-            <input type="text" class="form-control" id="name" placeholder="Your name" required>
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email *</label>
-            <input type="email" class="form-control" id="email" placeholder="Your email" required>
+            <!-- 
+              KEY FIX 2: 
+              - We use [(ngModel)] to link this input to the 'name' property in contact.ts.
+              - The 'name' attribute is required for ngModel.
+            -->
+            <input type="text" 
+                   class="form-control" 
+                   id="name" 
+                   placeholder="Your name" 
+                   required
+                   [(ngModel)]="name"
+                   name="name"
+                   #nameInput="ngModel"> <!-- Local ref for validation -->
+            
+            <!-- Optional: Show validation error -->
+            @if (nameInput.invalid && (nameInput.dirty || nameInput.touched)) {
+              <div class="text-danger small mt-1">
+                Name is required.
+              </div>
+            }
           </div>
           <div class="mb-3">
             <label for="message" class="form-label">Message *</label>
-            <textarea class="form-control" id="message" rows="5" placeholder="Write your message" required></textarea>
+            <!-- 
+              KEY FIX 3: 
+              - We link this textarea to the 'message' property in contact.ts.
+            -->
+            <textarea class="form-control" 
+                      id="message" 
+                      rows="5" 
+                      placeholder="Write your message" 
+                      required
+                      [(ngModel)]="message"
+                      name="message"
+                      #messageInput="ngModel"></textarea>
+            
+            <!-- Optional: Show validation error -->
+            @if (messageInput.invalid && (messageInput.dirty || messageInput.touched)) {
+              <div class="text-danger small mt-1">
+                Message is required.
+              </div>
+            }
           </div>
-          <button type="submit" class="btn btn-primary">Send Message</button>
+          <div class="d-grid">
+            <!-- The button is disabled if the form is invalid -->
+            <button type="submit" class="btn btn-primary" [disabled]="!contactForm.form.valid">Send Message</button>
+          </div>
         </form>
-        <div id="alertMessage" class="mt-3"></div>
+        
+        <!-- 
+          We use @if to show the alert message 
+          based on the 'alertMessage' property from contact.ts
+        -->
+        @if (alertMessage) {
+          <div class="alert alert-success mt-3" role="alert">
+            {{ alertMessage }}
+          </div>
+        }
       </div>
     </div>
   </div>
 </div>
-
-<script>
-document.getElementById('contactForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const name = encodeURIComponent(document.getElementById('name').value.trim());
-    const email = encodeURIComponent(document.getElementById('email').value.trim());
-    const message = encodeURIComponent(document.getElementById('message').value.trim());
-
-    if (!name || !email || !message) {
-        alert("Please fill in all fields.");
-        return;
-    }
-
-    const mailtoLink = `mailto:shaheeraliali@hotmail.com?subject=Contact from ${name}&body=Name: ${name}%0AEmail: ${email}%0AMessage:%0A${message}`;
-
-    // Open the email client
-    window.location.href = mailtoLink;
-});
-</script>
