@@ -44,16 +44,35 @@ export class Contact {
     const encodedBody = encodeURIComponent(body);
     
     // 4. Construct the Gmail-specific link
-    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${encodedSubject}&body=${encodedBody}`;
+    //const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=${targetEmail}&su=${encodedSubject}&body=${encodedBody}`;
     // const outlookLink = `https://outlook.live.com/mail/0/deeplink/compose?to=${targetEmail}&subject=${encodedSubject}&body=${encodedBody}`;
     
     // --- End of key logic ---
 
     // Show a success message
-    this.alertMessage = 'Success! Redirecting you to gmail... Email to shaheeraliali@hotmail.com if doesnt work';
-    
+    // this.alertMessage = 'Success! Redirecting you to gmail... Email to shaheeraliali@hotmail.com if doesnt work';
+      
+    // 4. --- New logic to check for mobile ---
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    let linkToOpen: string;
+    let alertMessageText: string;
+
+    if (isMobile) {
+      // Use the native app URL scheme (ms-outlook://)
+      linkToOpen = `ms-outlook://compose?to=${targetEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+      alertMessageText = 'Success! Opening your mail app... (Email: shaheeraliali@hotmail.com) If the link doesnt support.';
+    } else {
+      // Use the standard web URL for desktops
+      linkToOpen = `https://outlook.live.com/mail/0/deeplink/compose?to=${targetEmail}&subject=${encodedSubject}&body=${encodedBody}`;
+      alertMessageText = 'Success! Redirecting you to Outlook...';
+    }
+    // --- End of new logic ---
+
+    // Show a success message
+    this.alertMessage = alertMessageText;
     // Open the Gmail link in a new tab
-    window.open(gmailLink, '_blank');
+    window.open(linkToOpen, '_blank');
     
     // Optional: Reset the form after submission
     form.resetForm(); // Use resetForm() for NgForm
